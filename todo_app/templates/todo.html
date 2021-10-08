@@ -1,0 +1,31 @@
+
+{% extends 'base.html' %}
+{% block start %} 
+    <h1 class='container center text-justify'>This is Django todo</h1>
+    <div class="container mt-5 pt-5">
+    <form method="post">
+      {% csrf_token%}
+        <div class="form-group">
+          <label><b>Example textarea</b></label>
+          <textarea class="form-control" id="todo" name="todo" rows="3"></textarea>
+        </div>
+        <button class="btn btn-primary mt-4" type="submit">Add Todo</button>
+      </form>
+      <ul class="list-group">
+        {% for todo in todos%}
+          {% if todo.is_complete %}
+          <b><li class="list-group-item mt-4 "><strike>{{todo.todo}}</strike>
+            <a href="{% url 'todo_delete' todo.id %}" class="btn btn-danger">Del</a>
+          <a href="{% url 'is_complete_fun' todo.id %}" class="btn btn-success">Mark as uncompleted</a>
+          </li></b>
+          {% else %}
+          <b><li class="list-group-item mt-4 ">{{todo.todo}}
+            <a href="{% url 'todo_delete' todo.id %}" class="btn btn-danger">Del</a>
+          <a href="{% url 'is_complete_fun' todo.id %}" class="btn btn-success">Mark as completed</a>
+          </li></b>
+          {% endif %}
+        {% endfor%}
+    </div>
+
+
+{% endblock %}
